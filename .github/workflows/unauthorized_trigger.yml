@@ -1,7 +1,10 @@
 name: Unauthorized Dispatch Test
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+       - AWS-release
+  workflow_dispatch: #Manual Trigger
 
 jobs:
   send-event:
