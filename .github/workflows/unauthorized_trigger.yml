@@ -1,0 +1,21 @@
+name: Unauthorized Dispatch Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  send-event:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Repository Dispatch to RepoB
+        run: |
+          curl -X POST -H "Accept: application/vnd.github.v3+json" \
+               -H "Authorization: Bearer ${{ secrets.INVALID_OAUTH_TOKEN }}" \
+               https://api.github.com/repos/your_org/RepoB/dispatches \
+               -d '{
+                     "event_type": "hello_world",
+                     "client_payload": {
+                        "auth_token": "${{ secrets.INVALID_OAUTH_TOKEN }}",
+                        "trigger_repo": "${{ github.repository }}"
+                     }
+                   }'
